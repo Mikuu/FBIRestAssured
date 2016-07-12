@@ -1,18 +1,14 @@
-package com.restassured.demo.apitest;
+package com.restassured.apitest.workshop;
 
 import io.restassured.http.ContentType;
 import org.junit.Test;
 import org.w3c.dom.events.EventException;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.equalTo;
-
 
 
 public class PracticeRequest {

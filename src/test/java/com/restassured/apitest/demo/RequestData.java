@@ -1,4 +1,4 @@
-package com.restassured.demo.apitest;
+package com.restassured.apitest.demo;
 
 import java.util.List;
 

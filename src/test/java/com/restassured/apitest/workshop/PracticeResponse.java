@@ -1,4 +1,4 @@
-package com.restassured.demo.apitest;
+package com.restassured.apitest.workshop;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -12,16 +12,16 @@ import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.w3c.dom.events.EventException;
 
-import java.util.regex.Pattern;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.matcher.ResponseAwareMatcherComposer.and;
 import static io.restassured.matcher.RestAssuredMatchers.endsWithPath;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.junit.Assert.assertTrue;
-import static io.restassured.matcher.ResponseAwareMatcherComposer.and;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertTrue;
 
 public class PracticeResponse {
 
