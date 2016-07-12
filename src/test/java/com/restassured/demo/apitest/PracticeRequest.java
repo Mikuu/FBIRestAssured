@@ -21,7 +21,7 @@ public class PracticeRequest {
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
-    private static String token = "ya29.CjAbAz7QMh0Pevh1BaHBSjKRR9Mv07ttSCC_1gDE8WzJnLXH9p5_IbuPCIxYDbTwGhc";
+    private static String token = "ya29.CjAeA1vu3kaQMREU_EtSg8zFdU9EkirwNOoqcRMN1XDhNRVemckR97yhD4IFvjzqFl4";
 
     @Test
     public void testGoogleBookAPIDataInURL() throws EventException {

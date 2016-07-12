@@ -127,7 +127,7 @@ public class PracticeResponse {
         .then()
                 .assertThat()
                 .statusCode(200)
-                .time(lessThan(3000L));
+                .time(lessThan(5000L));
     }
 
     @Test
@@ -182,7 +182,7 @@ public class PracticeResponse {
         .then()
                 .log().all()
                 .assertThat()
-                .body("items.findAll {it.saleInfo.listPrice.amount > 200}.size()", greaterThanOrEqualTo(4))
+                .body("items.findAll {it.saleInfo.listPrice.amount > 200}.size()", greaterThanOrEqualTo(3))
                 .body("items.collect {it.saleInfo.retailPrice.amount}.sum()", greaterThan(700.00))
                 .body("items*.saleInfo.retailPrice.amount.sum()", greaterThan(700.00))
                 .statusCode(200);
