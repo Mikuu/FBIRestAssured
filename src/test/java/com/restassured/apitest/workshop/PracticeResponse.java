@@ -29,9 +29,6 @@ public class PracticeResponse {
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
-    private static String token = "ya29.CjAdA-8yzhpX8Tg7mcCVpzJsKUTdSTA3OG5hNwrwYUTxxrrUVCYopEuLy-j66ACid4k";
-    private static String spreadsheetId = "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4";
-
     @Test
     public void testGetAllResponse() throws EventException {
         String response = given()
