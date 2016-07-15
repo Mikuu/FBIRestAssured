@@ -17,7 +17,8 @@ public class PracticeRequest {
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
-    private static String token = "ya29.CjAgA-C8bG1PdYRQsw1qxrNEjOaXU3q1plvisoTUm6tjXC75m7qacJsi8Ihi_7umS80";
+    private static String token = "ya29.CjAhAxtUkDMOySU5j8dzJYsmRE22D0ughsXKC6Q6fg2QBdvddUSfTk4k_WH6QjWFgeg";
+    private static String spreadID ="14jSUH8DoGN3k-QqIV6qIocW-ZYlN_RL507SXjYN7AgM";
 
     @Test
     public void testGoogleBookAPIDataInURL() throws EventException {
@@ -65,7 +66,7 @@ public class PracticeRequest {
 
         given()
                 .auth().oauth2(this.token)
-                .pathParam("spreadsheet_id", "14jSUH8DoGN3k-QqIV6qIocW-ZYlN_RL507SXjYN7AgM")
+                .pathParam("spreadsheet_id", this.spreadID)
                 .pathParam("range", "People!A5:E5")
                 .param("valueInputOption", "USER_ENTERED")
                 .body(postData)
@@ -88,7 +89,7 @@ public class PracticeRequest {
         given()
                 .log().all()
                 .auth().oauth2(this.token)
-                .pathParam("spreadsheet_id", "14jSUH8DoGN3k-QqIV6qIocW-ZYlN_RL507SXjYN7AgM")
+                .pathParam("spreadsheet_id", this.spreadID)
                 .pathParam("range", "Book!A5:E5")
                 .param("valueInputOption", "USER_ENTERED")
                 .body(postData)
@@ -130,17 +131,17 @@ public class PracticeRequest {
                 "    {\n" +
                 "      \"updateCells\": {\n" +
                 "        \"start\": {\n" +
-                "          \"sheetId\": 910726641,\n" +
-                "          \"rowIndex\": 7,\n" +
-                "          \"columnIndex\": 1\n" +
+                "          \"sheetId\": 0,\n" +
+                "          \"rowIndex\": 1,\n" +
+                "          \"columnIndex\": 3\n" +
                 "        },\n" +
                 "        \"rows\": [\n" +
                 "          {\n" +
                 "            \"values\": [\n" +
                 "              {\n" +
-                "                \"userEnteredFormat\": {\"backgroundColor\": {\"red\": 0.8,\n" +
-                "                  \"green\": 0.9,\n" +
-                "                  \"blue\": 0.6}}\n" +
+                "                \"userEnteredFormat\": {\"backgroundColor\": {\"red\": 0.2,\n" +
+                "                  \"green\": 0.5,\n" +
+                "                  \"blue\": 0.9}}\n" +
                 "              }\n" +
                 "            ]\n" +
                 "          }\n" +
@@ -154,7 +155,7 @@ public class PracticeRequest {
         given()
                 .log().all()
                 .urlEncodingEnabled(false)
-                .pathParam("spreadsheet_id", "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4")
+                .pathParam("spreadsheet_id", this.spreadID)
                 .auth().oauth2(this.token)
                 .body(postData)
         .when()
