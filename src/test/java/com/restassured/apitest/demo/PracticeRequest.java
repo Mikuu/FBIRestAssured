@@ -105,14 +105,14 @@ public class PracticeRequest {
     @Test
     public void testGoogleSheetsAPIObjectDataInBody() throws EventException {
         RequestData postData = new RequestData();
-        postData.setRange("demoSheet!B8:E8");
+        postData.setRange("Book!A5:E5");
         postData.setMajorDimension("ROWS");
-        postData.setValues(asList(asList("Miya8", "1st May", "Star", "HeHe")));
+        postData.setValues(asList(asList("J.K Rowling", "fairy tale", "280", "", "Harry Potter")));
 
         given()
                 .auth().oauth2(this.token)
-                .pathParam("spreadsheet_id", "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4")
-                .pathParam("range", "demoSheet!B8:E8")
+                .pathParam("spreadsheet_id", this.spreadID)
+                .pathParam("range", "Book!A5:E5")
                 .param("valueInputOption", "USER_ENTERED")
                 .body(postData)
         .when()
