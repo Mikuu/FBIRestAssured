@@ -29,206 +29,107 @@ public class PracticeResponse {
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
-    private static String token = "ya29.CjAdA-8yzhpX8Tg7mcCVpzJsKUTdSTA3OG5hNwrwYUTxxrrUVCYopEuLy-j66ACid4k";
-    private static String spreadsheetId = "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4";
+    private static String token = "ya29.CjAhA5BnNLbWnqNTVv5nkvISTaxWe0oH844W4VBC-1nlaU65_AiMn1z4C17eTQiH0oo";
+    private static String spreadsheetId = "14jSUH8DoGN3k-QqIV6qIocW-ZYlN_RL507SXjYN7AgM";
 
+    //https://developers.google.com/books/docs/v1/reference/volumes/list
+    //发送get请求，返回书名为含有cucumber的书，并返回一个结果；打印response返回内容
     @Test
     public void testGetAllResponse() throws EventException {
-        String response = given()
-        .when().get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1").asString();
-        System.out.print(response);
 
     }
 
+    //https://developers.google.com/sheets/samples/reading
+    //发送get请求，打印sheet＝people的所有数据
     @Test
-    public void testExtractFragmentFromResponse() throws EventException {
-        String title =
-        given()
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-        .then()
-                .log().all()
-                .contentType(ContentType.JSON)
-                .assertThat()
-                .statusCode(200)
-        .extract()
-                .path("items[0].volumeInfo.title");
-        System.out.print("Title -> "+title);
+     public void testGetGoogleSheetResponse(){
 
     }
 
+    //https://developers.google.com/sheets/samples/reading
+    //使用extract method提取response片段 － 打印Favorite Color
+    @Test
+    public void testExtractFragmentFromGetGoogleSheetResponse(){
+
+    }
+
+    //https://developers.google.com/books/docs/v1/reference/volumes/list
+    //使用extract method提取response片段
+    //https://github.com/rest-assured/rest-assured/wiki/Usage#extracting-values-from-the-response-after-validation
+    @Test
+    public void testExtractFragmentFromGoogleBookResponse() throws EventException {
+
+    }
+
+    //https://developers.google.com/books/docs/v1/reference/volumes/list
+    //使用extract method提取response片段
+    //https://github.com/rest-assured/rest-assured/wiki/Usage#extracting-values-from-the-response-after-validation
     @Test
     public void testExtractAllResponse() throws EventException {
-        Response response =
-                given()
-                .when()
-                        .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-                .then()
-                        .log().all()
-                        .contentType(ContentType.JSON)
-                        .assertThat()
-                        .statusCode(200)
-                .extract()
-                        .response();
 
-        int totalItems = response.path("totalItems");
-        String title = response.path("items[0].volumeInfo.title");
-        String publisher = response.path("items[0].volumeInfo.publisher");
-        Headers allHeaders = response.headers();
-        Map<String, String> allCookies = response.getCookies();
-
-        System.out.print("\nAll Headers -> \n"+allHeaders.toString());
-        System.out.print("\nAll Cookies -> \n"+allCookies.toString());
-        System.out.print("\nTotal Items: "+totalItems+"\nTitle: "+title+"\nPublisher: "+publisher);
     }
 
-    @Test
-    public void testUsePartInResponse1() throws EventException {
-        given()
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-        .then()
-                .log().all()
-                .assertThat()
-                .body("items[0].selfLink", new ResponseAwareMatcher<Response>() {
-                                                public Matcher<?> matcher(Response response) {
-                                                    return equalTo("https://www.googleapis.com/books/v1/volumes/" + response.path("items[0].id"));
-                                                }
-                });
-    }
-
+    //https://developers.google.com/books/docs/v1/reference/volumes/list
+    //使用Response的一部分去验证Response另一部分
+    //https://github.com/rest-assured/rest-assured/wiki/Usage#use-the-response-to-verify-other-parts-of-the-response
     @Test
     public void testUsePartInResponse2() throws EventException {
-        given()
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-        .then()
-                .log().all()
-                .assertThat()
-                .body("items[0].selfLink", response -> equalTo("https://www.googleapis.com/books/v1/volumes/" + response.path("items[0].id")));
+
     }
 
+    //https://developers.google.com/books/docs/v1/reference/volumes/list
+    //使用Response的一部分去验证Response另一部分
+    //https://github.com/rest-assured/rest-assured/wiki/Usage#use-the-response-to-verify-other-parts-of-the-response
     @Test
     public void testUsePartInResponse3() throws EventException {
-        given()
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-        .then()
-                .assertThat()
-                .body("items[0].selfLink", endsWithPath("items[0].id"))
-                .body("items[0].selfLink", and(startsWith("https://www.googleapis.com/"), endsWithPath("items[0].id")));
+
     }
 
+
+    //https://developers.google.com/books/docs/v1/reference/volumes/list
+    //测试响应时间
+    //https://github.com/rest-assured/rest-assured/wiki/Usage#use-the-response-to-verify-other-parts-of-the-response
     @Test
     public void testResponseTime() throws EventException {
-        given()
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-        .then()
-                .assertThat()
-                .statusCode(200)
-                .time(lessThan(5000L));
+
     }
 
+    //直接从response body中查找特定值
+    //https://github.com/rest-assured/rest-assured/wiki/Usage#example-1---json
     @Test
     public void testResponseBasicUsage() throws EventException {
-        given()
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=2")
-        .then()
-                .log().all()
-                .assertThat()
-                .statusCode(200)
-                .body("kind", equalTo("books#volumes"))
-                .body("items.id", hasItems("0dge3Xh6EjUC", "YuC_HK8b6_4C"));
 
     }
 
-    @Test
-    public void testJsonSchema() throws EventException {
-        given()
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=10")
-        .then()
-                .log().all()
-                .assertThat()
-                .body(matchesJsonSchemaInClasspath("google_book_schema.json"));
-
-    }
-
+    //https://developers.google.com/books/docs/v1/reference/volumes/list
+    //pageCount>300的书里面是否包含title为："Advances in Sea Cucumber Aquaculture and Management"和"A Treatise on the Culture of the Cucumber"的书
+    // https://github.com/rest-assured/rest-assured/wiki/Usage#json-schema-validation -> Example 3 - Complex parsing and validation
     @Test
     public void testGroovyCollection1() throws EventException {
-        given()
-                .param("q", "cucumber")
-                .param("maxResults", 10)
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes")
-        .then()
-                .log().all()
-                .assertThat()
-                .body("items.findAll {it.volumeInfo.pageCount > 300}.volumeInfo.title", hasItems("Advances in Sea Cucumber Aquaculture and Management",
-                                "A Treatise on the Culture of the Cucumber"));
 
     }
 
+
+    //https://developers.google.com/books/docs/v1/reference/volumes/list
+    // https://github.com/rest-assured/rest-assured/wiki/Usage#json-schema-validation -> Example 3 - Complex parsing and validation
     @Test
     public void testGroovyCollection2() throws EventException {
-        given()
-                .param("filter", "paid-ebooks")
-                .param("q", "a")
-                .param("maxResults", 10)
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes")
-        .then()
-                .log().all()
-                .assertThat()
-                .body("items.findAll {it.saleInfo.listPrice.amount > 200}.size()", greaterThanOrEqualTo(3))
-                .body("items.collect {it.saleInfo.retailPrice.amount}.sum()", greaterThan(700.00))
-                .body("items*.saleInfo.retailPrice.amount.sum()", greaterThan(700.00))
-                .statusCode(200);
 
     }
 
+    //https://developers.google.com/books/docs/v1/reference/volumes/list
+    //查找saleability属性
+    // https://github.com/rest-assured/rest-assured/wiki/Usage#json-schema-validation -> Example 3 - Complex parsing and validation
     @Test
     public void testGroovyCollection3() throws EventException {
-        given()
-                .param("q", "a")
-                .param("maxResults", 10)
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes")
-        .then()
-                .log().all()
-                .assertThat()
-                .body("items.unique {it.saleInfo.saleability}.size()", lessThanOrEqualTo(3))
-                .statusCode(200);
 
     }
 
+    //https://developers.google.com/books/docs/v1/reference/volumes/list
+    //使用Specification
+    //https://github.com/rest-assured/rest-assured/wiki/Usage#specification-re-use
     @Test
     public void testSpecification() throws EventException {
-        RequestSpecification requestSpec = new RequestSpecBuilder()
-                .addParam("q", "a")
-                .addParam("maxRequest", 10)
-                .build();
-
-        ResponseSpecBuilder responseSpecBuilder = new ResponseSpecBuilder();
-        responseSpecBuilder.expectStatusCode(200);
-        responseSpecBuilder.expectResponseTime(lessThan(5000L));
-        responseSpecBuilder.expectBody("kind", equalTo("books#volumes"));
-        ResponseSpecification responseSpec = responseSpecBuilder.build();
-
-        Response response =
-        given()
-                .spec(requestSpec)
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes")
-        .then()
-                .assertThat()
-                .spec(responseSpec)
-        .extract()
-                .response();
-
-        assertTrue(Pattern.matches("\\d+", response.path("totalItems").toString()));
 
     }
 

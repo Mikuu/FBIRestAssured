@@ -29,30 +29,56 @@ public class PracticeResponse {
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
-    private static String token = "ya29.CjAdA-8yzhpX8Tg7mcCVpzJsKUTdSTA3OG5hNwrwYUTxxrrUVCYopEuLy-j66ACid4k";
-    private static String spreadsheetId = "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4";
+    private static String token = "ya29.CjAhA5BnNLbWnqNTVv5nkvISTaxWe0oH844W4VBC-1nlaU65_AiMn1z4C17eTQiH0oo";
+    private static String spreadsheetId = "14jSUH8DoGN3k-QqIV6qIocW-ZYlN_RL507SXjYN7AgM";
 
     @Test
     public void testGetAllResponse() throws EventException {
-        String response = given()
-        .when().get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1").asString();
+        String response =
+                given()
+                .when().get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1").asString();
         System.out.print(response);
 
     }
 
     @Test
-    public void testExtractFragmentFromResponse() throws EventException {
+    public void testGetGoogleSheetResponse(){
+        String response =
+                given()
+                        .auth().oauth2(this.token)
+                        .when().get("https://sheets.googleapis.com/v4/spreadsheets/14jSUH8DoGN3k-QqIV6qIocW-ZYlN_RL507SXjYN7AgM/values/People!A1:E4").asString();
+        System.out.print(response);
+    }
+
+    @Test
+    public void testExtractFragmentFromGetGoogleSheetResponse(){
+        String favoriteColor =
+                given()
+                        .auth().oauth2(this.token)
+                        .when()
+                        .get("https://sheets.googleapis.com/v4/spreadsheets/14jSUH8DoGN3k-QqIV6qIocW-ZYlN_RL507SXjYN7AgM/values/People!A1:E4")
+                        .then()
+                        .log().all()
+                        .assertThat()
+                        .statusCode(200)
+                        .extract()
+                        .path("values[1][3]");
+        System.out.print("Favorite Color -> " + favoriteColor);
+    }
+
+    @Test
+    public void testExtractFragmentFromGoogleBookResponse() throws EventException {
         String title =
-        given()
-        .when()
-                .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-        .then()
-                .log().all()
-                .contentType(ContentType.JSON)
-                .assertThat()
-                .statusCode(200)
-        .extract()
-                .path("items[0].volumeInfo.title");
+                given()
+                        .when()
+                        .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
+                        .then()
+                        .log().all()
+                        .contentType(ContentType.JSON)
+                        .assertThat()
+                        .statusCode(200)
+                        .extract()
+                        .path("items[0].volumeInfo.title");
         System.out.print("Title -> "+title);
 
     }
