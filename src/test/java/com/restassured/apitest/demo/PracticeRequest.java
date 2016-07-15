@@ -17,7 +17,7 @@ public class PracticeRequest {
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
-    private static String token = "ya29.CjAgA6VXsseWe5_KRy1w7zHYTMv5cBxaj8JApmkyCAEA0fibo63sR3U1yP5jKjNtBEE";
+    private static String token = "ya29.CjAgA-C8bG1PdYRQsw1qxrNEjOaXU3q1plvisoTUm6tjXC75m7qacJsi8Ihi_7umS80";
 
     @Test
     public void testGoogleBookAPIDataInURL() throws EventException {
@@ -157,9 +157,9 @@ public class PracticeRequest {
                 .pathParam("spreadsheet_id", "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4")
                 .auth().oauth2(this.token)
                 .body(postData)
-                .when()
+        .when()
                 .post("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheet_id}:batchUpdate")
-                .then()
+        .then()
                 .log().all()
                 .contentType(ContentType.JSON)
                 .assertThat()
