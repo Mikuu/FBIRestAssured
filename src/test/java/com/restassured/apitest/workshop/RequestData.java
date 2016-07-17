@@ -1,5 +1,6 @@
 package com.restassured.apitest.workshop;
 
+
 import java.util.List;
 
 public class RequestData {
@@ -8,23 +9,23 @@ public class RequestData {
     private List values;
 
     public String getRange() {
-        return this.range;
-    }
-
-    public String getMajorDimension() {
-        return this.majorDimension;
-    }
-
-    public List getValues() {
-        return this.values;
+        return range;
     }
 
     public void setRange(String range) {
         this.range = range;
     }
 
+    public String getMajorDimension() {
+        return majorDimension;
+    }
+
     public void setMajorDimension(String majorDimension) {
         this.majorDimension = majorDimension;
+    }
+
+    public List getValues() {
+        return values;
     }
 
     public void setValues(List values) {
