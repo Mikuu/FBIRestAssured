@@ -24,7 +24,13 @@ public class PracticeRequest {
     //发送get请求，返回书名为含有cucumber的书，并返回两个结果
     @Test
     public void testGoogleBookAPIDataInURL() throws EventException {
-
+        given()
+        .when()
+                .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=2")
+        .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200);
     }
 
 
@@ -34,7 +40,15 @@ public class PracticeRequest {
     //https://github.com/rest-assured/rest-assured/wiki/Usage#syntactic-sugar
     @Test
     public void testGoogleBookAPIDataInParameters() throws EventException {
-
+        given()
+                .param("q","cucumber")
+                .param("maxResults","2")
+        .when()
+                .get("https://www.googleapis.com/books/v1/volumes")
+        .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200);
     }
 
 
@@ -45,6 +59,31 @@ public class PracticeRequest {
     //https://github.com/rest-assured/rest-assured/wiki/Usage#request-body
     @Test
     public void testGoogleSheetsAPIDataInBody() throws EventException {
+        String requestData = "{\n" +
+                "  \"range\": \"People!A5:E5\",\n" +
+                "  \"majorDimension\": \"ROWS\",\n" +
+                "  \"values\": [\n" +
+                "    [\n" +
+                "      \"Benjamin\",\n" +
+                "      \"Puxley\",\n" +
+                "      \"Male\",\n" +
+                "      \"Green\",\n" +
+                "      \"Apple\"\n" +
+                "    ]\n" +
+                "  ]\n" +
+                "}";
+
+        given()
+                .auth().oauth2(this.token)
+                .pathParam("spreadsheetId",this.spreadID)
+                .pathParam("range","People!A5:E5")
+                .param("valueInputOption","USER_ENTERED")
+                .body(requestData)
+        .when()
+                .put("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}")
+         .then()
+                .assertThat()
+                .statusCode(200);
 
     }
 
