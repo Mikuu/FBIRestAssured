@@ -17,7 +17,7 @@ public class PracticeRequest {
     //  Practice using Parameters in Request.
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
-    private static String token = "ya29.CjAjAyaIfxV4wKuiel_7q-plkV4I855TXkZiC2edKhAkm3KL9WYbGduaYPIm8c2sIAE";
+    private static String token = "ya29.CjAlA12VWMPXVS63lCPGZU8uS9gxb_wfa0vw8vdVr4NSe9eAfiKOXXn79PAvp84yy8k";
     private static String spreadID ="14jSUH8DoGN3k-QqIV6qIocW-ZYlN_RL507SXjYN7AgM";
 
     //https://developers.google.com/books/docs/v1/reference/volumes/list
@@ -74,6 +74,30 @@ public class PracticeRequest {
     //发送post请求，修改Favorite Color列的背景色
     @Test
     public void testGoogleSheetsPost() throws EventException {
-
+        String postData = "{\n" +
+                "  \"requests\": [\n" +
+                "    {\n" +
+                "      \"updateCells\": {\n" +
+                "        \"start\": {\n" +
+                "          \"sheetId\": 0,\n" +
+                "          \"rowIndex\": 1,\n" +
+                "          \"columnIndex\": 3\n" +
+                "        },\n" +
+                "        \"rows\": [\n" +
+                "          {\n" +
+                "            \"values\": [\n" +
+                "              {\n" +
+                "                \"userEnteredFormat\": {\"backgroundColor\": {\"red\": 0.2,\n" +
+                "                  \"green\": 0.5,\n" +
+                "                  \"blue\": 0.9}}\n" +
+                "              }\n" +
+                "            ]\n" +
+                "          }\n" +
+                "        ],\n" +
+                "        \"fields\": \"userEnteredFormat.backgroundColor\"\n" +
+                "      }\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
     }
 }

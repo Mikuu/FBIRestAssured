@@ -20,10 +20,9 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.matcher.ResponseAwareMatcherComposer.and;
 import static io.restassured.matcher.RestAssuredMatchers.endsWithPath;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -34,7 +33,7 @@ public class PracticeResponse {
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
 
-    private static String token = "ya29.CjAjAxcwY02Y1dC4QiODlAWG8yakWC79DKtLsJKIgq4N2q5eueW5g5URLtpOCW-yq2Q";
+    private static String token = "ya29.CjAlA12VWMPXVS63lCPGZU8uS9gxb_wfa0vw8vdVr4NSe9eAfiKOXXn79PAvp84yy8k";
     private static String spreadsheetId = "14jSUH8DoGN3k-QqIV6qIocW-ZYlN_RL507SXjYN7AgM";
 
 
@@ -51,7 +50,7 @@ public class PracticeResponse {
     //直接从response body中查找特定值
     //https://github.com/rest-assured/rest-assured/wiki/Usage#example-1---json
     @Test
-    public void testResponseBasicUsage() throws EventException {
+        public void testResponseBasicUsage() throws EventException {
 
     }
 
