@@ -29,41 +29,41 @@ public class PracticeResponse {
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
-    private static String token = "ya29.CjAlA12VWMPXVS63lCPGZU8uS9gxb_wfa0vw8vdVr4NSe9eAfiKOXXn79PAvp84yy8k";
-    private static String spreadsheetId = "14jSUH8DoGN3k-QqIV6qIocW-ZYlN_RL507SXjYN7AgM";
+    private static String token = "ya29.CjGdA3vloTX91tfAcgG7t3yPYKc-RHyXI4VR_8QwY7rNDd1ffs91kSEzX-L5ss1OSWlP";
+    private static String spreadsheetId = "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4";
 
     @Test
     public void testGetAllResponse() throws EventException {
         String response =
                 given()
-                        .when().get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1").asString();
+                .when().get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1").asString();
         System.out.print(response);
 
     }
 
     @Test
-    public void testGetGoogleSheetResponse() {
+    public void testGetGoogleSheetResponse(){
         String response =
                 given()
                         .auth().oauth2(this.token)
-                        .when().get("https://sheets.googleapis.com/v4/spreadsheets/" + this.spreadsheetId + "/values/People!A1:E4").asString();
+                        .when().get("https://sheets.googleapis.com/v4/spreadsheets/1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4/values/People!A1:E4").asString();
         System.out.print(response);
     }
 
     @Test
-    public void testExtractFragmentFromGetGoogleSheetResponse() {
-        String favoriteColor =
+    public void testExtractFragmentFromGetGoogleSheetResponse(){
+        String mondayLunch =
                 given()
                         .auth().oauth2(this.token)
-                        .when()
-                        .get("https://sheets.googleapis.com/v4/spreadsheets/" + this.spreadsheetId + "/values/People!A1:E4")
-                        .then()
+                .when()
+                        .get("https://sheets.googleapis.com/v4/spreadsheets/1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4/values/foodPlan!B4:B7")
+                .then()
                         .log().all()
                         .assertThat()
                         .statusCode(200)
                         .extract()
-                        .path("values[1][3]");
-        System.out.print("Favorite Color -> " + favoriteColor);
+                        .path("values[1][0]");
+        System.out.print("Monday Lunch -> " + mondayLunch);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class PracticeResponse {
                         .statusCode(200)
                         .extract()
                         .path("items[0].volumeInfo.title");
-        System.out.print("Title -> " + title);
+        System.out.print("Title -> "+title);
 
     }
 
@@ -87,14 +87,14 @@ public class PracticeResponse {
     public void testExtractAllResponse() throws EventException {
         Response response =
                 given()
-                        .when()
+                .when()
                         .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-                        .then()
+                .then()
                         .log().all()
                         .contentType(ContentType.JSON)
                         .assertThat()
                         .statusCode(200)
-                        .extract()
+                .extract()
                         .response();
 
         int totalItems = response.path("totalItems");
@@ -103,32 +103,32 @@ public class PracticeResponse {
         Headers allHeaders = response.headers();
         Map<String, String> allCookies = response.getCookies();
 
-        System.out.print("\nAll Headers -> \n" + allHeaders.toString());
-        System.out.print("\nAll Cookies -> \n" + allCookies.toString());
-        System.out.print("\nTotal Items: " + totalItems + "\nTitle: " + title + "\nPublisher: " + publisher);
+        System.out.print("\nAll Headers -> \n"+allHeaders.toString());
+        System.out.print("\nAll Cookies -> \n"+allCookies.toString());
+        System.out.print("\nTotal Items: "+totalItems+"\nTitle: "+title+"\nPublisher: "+publisher);
     }
 
     @Test
     public void testUsePartInResponse1() throws EventException {
         given()
-                .when()
+        .when()
                 .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-                .then()
+        .then()
                 .log().all()
                 .assertThat()
                 .body("items[0].selfLink", new ResponseAwareMatcher<Response>() {
-                    public Matcher<?> matcher(Response response) {
-                        return equalTo("https://www.googleapis.com/books/v1/volumes/" + response.path("items[0].id"));
-                    }
+                                                public Matcher<?> matcher(Response response) {
+                                                    return equalTo("https://www.googleapis.com/books/v1/volumes/" + response.path("items[0].id"));
+                                                }
                 });
     }
 
     @Test
     public void testUsePartInResponse2() throws EventException {
         given()
-                .when()
+        .when()
                 .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-                .then()
+        .then()
                 .log().all()
                 .assertThat()
                 .body("items[0].selfLink", response -> equalTo("https://www.googleapis.com/books/v1/volumes/" + response.path("items[0].id")));
@@ -137,9 +137,9 @@ public class PracticeResponse {
     @Test
     public void testUsePartInResponse3() throws EventException {
         given()
-                .when()
+        .when()
                 .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-                .then()
+        .then()
                 .assertThat()
                 .body("items[0].selfLink", endsWithPath("items[0].id"))
                 .body("items[0].selfLink", and(startsWith("https://www.googleapis.com/"), endsWithPath("items[0].id")));
@@ -148,9 +148,9 @@ public class PracticeResponse {
     @Test
     public void testResponseTime() throws EventException {
         given()
-                .when()
+        .when()
                 .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-                .then()
+        .then()
                 .assertThat()
                 .statusCode(200)
                 .time(lessThan(5000L));
@@ -159,23 +159,23 @@ public class PracticeResponse {
     @Test
     public void testResponseBasicUsage() throws EventException {
         given()
-                .when()
+        .when()
                 .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=2")
-                .then()
+        .then()
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("items[0].volumeInfo.title", equalTo("Advances in Sea Cucumber Aquaculture and Management"));
-//                .body("items.id", hasItems("0dge3Xh6EjUC", "YuC_HK8b6_4C"));
+                .body("kind", equalTo("books#volumes"))
+                .body("items.id", hasItems("0dge3Xh6EjUC", "0FsUAAAAQAAJ"));
 
     }
 
     @Test
     public void testJsonSchema() throws EventException {
         given()
-                .when()
+        .when()
                 .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=10")
-                .then()
+        .then()
                 .log().all()
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("google_book_schema.json"));
@@ -187,13 +187,13 @@ public class PracticeResponse {
         given()
                 .param("q", "cucumber")
                 .param("maxResults", 10)
-                .when()
+        .when()
                 .get("https://www.googleapis.com/books/v1/volumes")
-                .then()
+        .then()
                 .log().all()
                 .assertThat()
                 .body("items.findAll {it.volumeInfo.pageCount > 300}.volumeInfo.title", hasItems("Advances in Sea Cucumber Aquaculture and Management",
-                        "A Treatise on the Culture of the Cucumber"));
+                                "A Treatise on the Culture of the Cucumber"));
 
     }
 
@@ -203,16 +203,15 @@ public class PracticeResponse {
                 .param("filter", "paid-ebooks")
                 .param("q", "a")
                 .param("maxResults", 10)
-                .when()
+        .when()
                 .get("https://www.googleapis.com/books/v1/volumes")
-                .then()
+        .then()
                 .log().all()
                 .assertThat()
                 .body("items.findAll {it.saleInfo.listPrice.amount > 200}.size()", greaterThanOrEqualTo(3))
                 .body("items.collect {it.saleInfo.retailPrice.amount}.sum()", greaterThan(700.00))
                 .body("items*.saleInfo.retailPrice.amount.sum()", greaterThan(700.00))
                 .statusCode(200);
-
     }
 
     @Test
@@ -220,9 +219,9 @@ public class PracticeResponse {
         given()
                 .param("q", "a")
                 .param("maxResults", 10)
-                .when()
+        .when()
                 .get("https://www.googleapis.com/books/v1/volumes")
-                .then()
+        .then()
                 .log().all()
                 .assertThat()
                 .body("items.unique {it.saleInfo.saleability}.size()", lessThanOrEqualTo(3))
@@ -244,17 +243,18 @@ public class PracticeResponse {
         ResponseSpecification responseSpec = responseSpecBuilder.build();
 
         Response response =
-                given()
-                        .spec(requestSpec)
-                        .when()
-                        .get("https://www.googleapis.com/books/v1/volumes")
-                        .then()
-                        .assertThat()
-                        .spec(responseSpec)
-                        .extract()
-                        .response();
+        given()
+                .spec(requestSpec)
+        .when()
+                .get("https://www.googleapis.com/books/v1/volumes")
+        .then()
+                .assertThat()
+                .spec(responseSpec)
+        .extract()
+                .response();
 
         assertTrue(Pattern.matches("\\d+", response.path("totalItems").toString()));
 
     }
+
 }

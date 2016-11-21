@@ -17,8 +17,8 @@ public class PracticeRequest {
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
-    private static String token = "ya29.CjAlA12VWMPXVS63lCPGZU8uS9gxb_wfa0vw8vdVr4NSe9eAfiKOXXn79PAvp84yy8k";
-    private static String spreadID ="14jSUH8DoGN3k-QqIV6qIocW-ZYlN_RL507SXjYN7AgM";
+    private static String token = "ya29.CjGdA3vloTX91tfAcgG7t3yPYKc-RHyXI4VR_8QwY7rNDd1ffs91kSEzX-L5ss1OSWlP";
+    private static String spreadsheetId = "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4";
 
     @Test
     public void testGoogleBookAPIDataInURL() throws EventException {
@@ -53,26 +53,26 @@ public class PracticeRequest {
     @Test
     public void testGoogleSheetsAPIDataInBody() throws EventException {
         String postData = "{\n" +
-                "  \"range\": \"People!A5:E5\",\n" +
+                "  \"range\": \"demoSheet!A5:A9\",\n" +
                 "  \"majorDimension\": \"ROWS\",\n" +
                 "  \"values\": [\n" +
-                "  [\"Benjamin\",\n" +
-                "  \"Puxley\",\n" +
-                "  \"Male\",\n" +
-                "  \"Green\",\n" +
-                "  \"Apple\"\n" +
-                "  ]]\n" +
+                "  [\"Benjamin\"],\n" +
+                "  [\"Puxley\"],\n" +
+                "  [\"Male\"],\n" +
+                "  [\"Green\"],\n" +
+                "  [\"Apple\"]\n" +
+                "  ]\n" +
                 "}";
 
         given()
                 .auth().oauth2(this.token)
-                .pathParam("spreadsheet_id", this.spreadID)
-                .pathParam("range", "People!A5:E5")
+                .pathParam("spreadsheetId", this.spreadsheetId)
+                .pathParam("range", "demoSheet!A5:A9")
                 .param("valueInputOption", "USER_ENTERED")
                 .body(postData)
-                .when()
-                .put("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheet_id}/values/{range}")
-                .then()
+        .when()
+                .put("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}")
+        .then()
                 .log().all()
                 .contentType(ContentType.JSON)
                 .assertThat()
@@ -89,12 +89,12 @@ public class PracticeRequest {
         given()
                 .log().all()
                 .auth().oauth2(this.token)
-                .pathParam("spreadsheet_id", this.spreadID)
+                .pathParam("spreadsheetId", this.spreadsheetId)
                 .pathParam("range", "Book!A5:E5")
                 .param("valueInputOption", "USER_ENTERED")
                 .body(postData)
                 .when()
-                .put("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheet_id}/values/{range}")
+                .put("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}")
                 .then()
                 .log().all()
                 .contentType(ContentType.JSON)
@@ -102,27 +102,27 @@ public class PracticeRequest {
                 .statusCode(200);
     }
 
-    @Test
-    public void testGoogleSheetsAPIObjectDataInBody() throws EventException {
-        RequestData postData = new RequestData();
-        postData.setRange("Book!A5:E5");
-        postData.setMajorDimension("ROWS");
-        postData.setValues(asList(asList("J.K Rowling", "fairy tale", "280", "", "Harry Potter")));
-
-        given()
-                .auth().oauth2(this.token)
-                .pathParam("spreadsheet_id", this.spreadID)
-                .pathParam("range", "Book!A5:E5")
-                .param("valueInputOption", "USER_ENTERED")
-                .body(postData)
-        .when()
-                .put("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheet_id}/values/{range}")
-        .then()
-                .log().all()
-                .contentType(ContentType.JSON)
-                .assertThat()
-                .statusCode(200);
-    }
+//    @Test
+//    public void testGoogleSheetsAPIObjectDataInBody() throws EventException {
+//        RequestData postData = new RequestData();
+//        postData.setRange("demoSheet!B8:E8");
+//        postData.setMajorDimension("ROWS");
+//        postData.setValues(asList(asList("Miya8", "1st May", "Star", "HeHe")));
+//
+//        given()
+//                .auth().oauth2(this.token)
+//                .pathParam("spreadsheetId", "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4")
+//                .pathParam("range", "demoSheet!B8:E8")
+//                .param("valueInputOption", "USER_ENTERED")
+//                .body(postData)
+//        .when()
+//                .put("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}")
+//        .then()
+//                .log().all()
+//                .contentType(ContentType.JSON)
+//                .assertThat()
+//                .statusCode(200);
+//    }
 
     @Test
     public void testGoogleSheetsPost() throws EventException {
@@ -132,16 +132,16 @@ public class PracticeRequest {
                 "      \"updateCells\": {\n" +
                 "        \"start\": {\n" +
                 "          \"sheetId\": 0,\n" +
-                "          \"rowIndex\": 1,\n" +
-                "          \"columnIndex\": 3\n" +
+                "          \"rowIndex\": 7,\n" +
+                "          \"columnIndex\": 1\n" +
                 "        },\n" +
                 "        \"rows\": [\n" +
                 "          {\n" +
                 "            \"values\": [\n" +
                 "              {\n" +
-                "                \"userEnteredFormat\": {\"backgroundColor\": {\"red\": 0.2,\n" +
-                "                  \"green\": 0.5,\n" +
-                "                  \"blue\": 0.9}}\n" +
+                "                \"userEnteredFormat\": {\"backgroundColor\": {\"red\": 0.8,\n" +
+                "                  \"green\": 0.9,\n" +
+                "                  \"blue\": 0.6}}\n" +
                 "              }\n" +
                 "            ]\n" +
                 "          }\n" +
@@ -155,11 +155,11 @@ public class PracticeRequest {
         given()
                 .log().all()
                 .urlEncodingEnabled(false)
-                .pathParam("spreadsheet_id", this.spreadID)
+                .pathParam("spreadsheetId", this.spreadsheetId)
                 .auth().oauth2(this.token)
                 .body(postData)
         .when()
-                .post("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheet_id}:batchUpdate")
+                .post("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:batchUpdate")
         .then()
                 .log().all()
                 .contentType(ContentType.JSON)
