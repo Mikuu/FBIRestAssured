@@ -102,27 +102,27 @@ public class PracticeRequest {
                 .statusCode(200);
     }
 
-//    @Test
-//    public void testGoogleSheetsAPIObjectDataInBody() throws EventException {
-//        RequestData postData = new RequestData();
-//        postData.setRange("demoSheet!B8:E8");
-//        postData.setMajorDimension("ROWS");
-//        postData.setValues(asList(asList("Miya8", "1st May", "Star", "HeHe")));
-//
-//        given()
-//                .auth().oauth2(this.token)
-//                .pathParam("spreadsheetId", "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4")
-//                .pathParam("range", "demoSheet!B8:E8")
-//                .param("valueInputOption", "USER_ENTERED")
-//                .body(postData)
-//        .when()
-//                .put("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}")
-//        .then()
-//                .log().all()
-//                .contentType(ContentType.JSON)
-//                .assertThat()
-//                .statusCode(200);
-//    }
+    @Test
+    public void testGoogleSheetsAPIObjectDataInBody() throws EventException {
+        RequestData postData = new RequestData();
+        postData.setRange("demoSheet!B8:E8");
+        postData.setMajorDimension("ROWS");
+        postData.setValues(asList(asList("Miya8", "1st May", "Star", "HeHe")));
+
+        given()
+                .auth().oauth2(this.token)
+                .pathParam("spreadsheetId", this.spreadsheetId)
+                .pathParam("range", "demoSheet!B8:E8")
+                .param("valueInputOption", "USER_ENTERED")
+                .body(postData)
+        .when()
+                .put("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}")
+        .then()
+                .log().all()
+                .contentType(ContentType.JSON)
+                .assertThat()
+                .statusCode(200);
+    }
 
     @Test
     public void testGoogleSheetsPost() throws EventException {
