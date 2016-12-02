@@ -18,6 +18,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static io.restassured.matcher.RestAssuredMatchers.endsWithPath;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertTrue;
 import static io.restassured.matcher.ResponseAwareMatcherComposer.and;
 import static org.hamcrest.CoreMatchers.startsWith;
@@ -29,7 +30,7 @@ public class PracticeResponse {
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
-    private static String token = "ya29.CjGdA3vloTX91tfAcgG7t3yPYKc-RHyXI4VR_8QwY7rNDd1ffs91kSEzX-L5ss1OSWlP";
+    private static String token = "ya29.CjOoA2rutrzJ5Vhg-vcaDl3qaDQg3Xuq-FMLkYcphoDKGxgxLt8akBVJ1_dH58h_3rS1q-0";
     private static String spreadsheetId = "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4";
 
     @Test
@@ -67,12 +68,26 @@ public class PracticeResponse {
     }
 
     @Test
+    public void testAssertValueInGoogleBookResponse() throws EventException {
+                given()
+                .when()
+                        .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
+                .then()
+                        .log().all()
+                        .contentType(ContentType.JSON)
+                        .assertThat()
+                        .statusCode(200)
+                        .body("items[0].volumeInfo.title", equalTo("Advances in Sea Cucumber Aquaculture and Management"));
+
+    }
+
+    @Test
     public void testExtractFragmentFromGoogleBookResponse() throws EventException {
         String title =
                 given()
                         .when()
                         .get("https://www.googleapis.com/books/v1/volumes?q=cucumber&maxResults=1")
-                        .then()
+                .then()
                         .log().all()
                         .contentType(ContentType.JSON)
                         .assertThat()
@@ -208,7 +223,7 @@ public class PracticeResponse {
         .then()
                 .log().all()
                 .assertThat()
-                .body("items.findAll {it.saleInfo.listPrice.amount > 200}.size()", greaterThanOrEqualTo(3))
+                .body("items.findAll {it.saleInfo.listPrice.amount > 200}.size()", greaterThanOrEqualTo(2))
                 .body("items.collect {it.saleInfo.retailPrice.amount}.sum()", greaterThan(700.00))
                 .body("items*.saleInfo.retailPrice.amount.sum()", greaterThan(700.00))
                 .statusCode(200);

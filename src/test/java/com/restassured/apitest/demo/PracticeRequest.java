@@ -17,7 +17,7 @@ public class PracticeRequest {
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
-    private static String token = "ya29.CjGdA3vloTX91tfAcgG7t3yPYKc-RHyXI4VR_8QwY7rNDd1ffs91kSEzX-L5ss1OSWlP";
+    private static String token = "ya29.CjOoA2rutrzJ5Vhg-vcaDl3qaDQg3Xuq-FMLkYcphoDKGxgxLt8akBVJ1_dH58h_3rS1q-0";
     private static String spreadsheetId = "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4";
 
     @Test
@@ -29,7 +29,7 @@ public class PracticeRequest {
                 .log().all()
                 .contentType(ContentType.JSON)
                 .assertThat()
-                    .statusCode(200);
+                .statusCode(200);
     }
 
     @Test
@@ -93,9 +93,9 @@ public class PracticeRequest {
                 .pathParam("range", "Book!A5:E5")
                 .param("valueInputOption", "USER_ENTERED")
                 .body(postData)
-                .when()
+        .when()
                 .put("https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}")
-                .then()
+        .then()
                 .log().all()
                 .contentType(ContentType.JSON)
                 .assertThat()
