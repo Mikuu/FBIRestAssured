@@ -17,7 +17,7 @@ public class PracticeRequest {
     //  Google Book API reference  https://developers.google.com/books/docs/v1/reference/volumes/list
     //  Google Sheets API reference  https://developers.google.com/sheets/reference/rest/
 
-    private static String token = "ya29.CjOoA2rutrzJ5Vhg-vcaDl3qaDQg3Xuq-FMLkYcphoDKGxgxLt8akBVJ1_dH58h_3rS1q-0";
+    private static String token = "ya29.CjOvA4x1rmDjqnwx8IY0gz6VCauKp2uGTVgCAuwXBrkjLeWeJnZVK-pjAUL4mvZxrKjSeW8";
     private static String spreadsheetId = "1bJsN2ji2kZKmOMVqn4eaoxve-qqJVP65nQqX6GIg2i4";
 
     @Test
@@ -105,14 +105,14 @@ public class PracticeRequest {
     @Test
     public void testGoogleSheetsAPIObjectDataInBody() throws EventException {
         RequestData postData = new RequestData();
-        postData.setRange("demoSheet!B8:E8");
+        postData.setRange("demoSheet!B2:E2");
         postData.setMajorDimension("ROWS");
         postData.setValues(asList(asList("Miya8", "1st May", "Star", "HeHe")));
 
         given()
                 .auth().oauth2(this.token)
                 .pathParam("spreadsheetId", this.spreadsheetId)
-                .pathParam("range", "demoSheet!B8:E8")
+                .pathParam("range", "demoSheet!B2:E2")
                 .param("valueInputOption", "USER_ENTERED")
                 .body(postData)
         .when()
